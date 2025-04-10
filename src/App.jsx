@@ -8,6 +8,8 @@ import Analytics from "./pages/Analytics";
 import Messages from "./pages/Messages";
 import Integrations from "./pages/Integrations";
 import ModalAdd from "./components/ModalAdd";
+import OverviewLoad from "./components/OverviewLoad";
+import TableDataLoad from "./components/TableDataLoad";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -212,105 +214,7 @@ function App() {
             </div>
           </header>
           {/* Overview */}
-          <main className="pl-5 bg-white p-3">
-            <div className="flex flex-row gap-4 items-center ">
-              <img className="w-7 h-6" src="../public/Squares four 1.png"></img>
-              <h1 className="text-2xl font-bold">Overview</h1>
-            </div>
-
-            <section className="grid grid-cols-3 gap-6 mb-5 mt-4">
-              {overviewData.map((item) => {
-                if (item.id == 1) {
-                  return (
-                    <div
-                      key={item.id}
-                      className="bg-pink-100 p-3 rounded-xl flex relative"
-                    >
-                      <div>
-                        <p className="font-bold">{item.title}</p>
-                        <h2 className="text-3xl font-bold ml-1">
-                          ${item.amount.toLocaleString("en-US")}
-                        </h2>
-                        <span className="flex items-center gap-2 mt-3">
-                          <p
-                            className={`text-sm ${
-                              item.change >= 0
-                                ? "text-green-500"
-                                : "text-red-500"
-                            }`}
-                          >
-                            {item.change >= 0 ? "▲" : "▼"} {item.change}%
-                          </p>
-                          <span> period of change</span>
-                        </span>
-                      </div>
-                      <button className="absolute top-8 right-4">
-                        <img src="../public/Button 1509.png" alt="Button" />
-                      </button>
-                    </div>
-                  );
-                } else if (item.id == 2) {
-                  return (
-                    <div
-                      key={item.id}
-                      className="bg-blue-100 p-3 rounded-xl flex relative"
-                    >
-                      <div>
-                        <p className="font-bold">{item.title}</p>
-                        <h2 className="text-3xl font-bold ml-1">
-                          ${item.amount.toLocaleString("en-US")}
-                        </h2>
-                        <span className="flex items-center gap-2 mt-3">
-                          <p
-                            className={`text-sm ${
-                              item.change >= 0
-                                ? "text-green-500"
-                                : "text-red-500"
-                            }`}
-                          >
-                            {item.change >= 0 ? "▲" : "▼"} {item.change}%
-                          </p>
-                          <span> period of change</span>
-                        </span>
-                      </div>
-                      <button className="absolute top-8 right-4">
-                        <img src="../public/Button 1529.png" alt="Button" />
-                      </button>
-                    </div>
-                  );
-                } else if (item.id == 3) {
-                  return (
-                    <div
-                      key={item.id}
-                      className="bg-indigo-100 p-3 rounded-xl flex relative"
-                    >
-                      <div>
-                        <p className="font-bold">{item.title}</p>
-                        <h2 className="text-3xl font-bold ml-1">
-                          {item.amount.toLocaleString("en-US")}
-                        </h2>
-                        <span className="flex items-center gap-2 mt-3">
-                          <p
-                            className={`text-sm ${
-                              item.change >= 0
-                                ? "text-green-500"
-                                : "text-red-500"
-                            }`}
-                          >
-                            {item.change >= 0 ? "▲" : "▼"} {item.change}%
-                          </p>
-                          <span> period of change</span>
-                        </span>
-                      </div>
-                      <button className="absolute top-8 right-4">
-                        <img src="../public/Button 1530.png" alt="Button" />
-                      </button>
-                    </div>
-                  );
-                }
-              })}
-            </section>
-          </main>
+          <OverviewLoad overviewData={overviewData}/>
           {/* Table */}
           <div className="flex bg-white justify-between items-center pb-5">
             <div className="flex justify-start gap-2 items-center pl-5">
@@ -328,65 +232,7 @@ function App() {
               </button>
             </div>
           </div>
-          <table className="w-full text-left bg-white">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3">
-                  <input type="checkbox"></input>
-                </th>
-                <th className="p-3">CUSTOMER NAME</th>
-                <th className="p-3">COMPANY</th>
-                <th className="p-3">ORDER VALUE</th>
-                <th className="p-3">ORDER DATE</th>
-                <th className="p-3">STATUS</th>
-                <th className="p-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {customerData.map((customer) => (
-                <tr key={customer.id} className="border-b border-b-gray-200">
-                  <td className="p-3">
-                    <input type="checkbox"></input>
-                  </td>
-                  <td className="p-3 flex items-center gap-2">
-                    <img
-                      src={customer.linkAvatar}
-                      alt={customer.name}
-                      className="w-8 h-8 rounded-full"
-                    />
-                    {customer.name}
-                  </td>
-                  <td className="p-3">{customer.company}</td>
-                  <td className="p-3">
-                    {customer.orderValue.toLocaleString("en-US")}
-                  </td>
-                  <td className="p-3">{customer.orderDate}</td>
-                  <td className="p-3">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        customer.status === "New"
-                          ? "bg-blue-100 text-blue-500"
-                          : customer.status === "In-progress"
-                          ? "bg-yellow-100 text-yellow-500"
-                          : "bg-green-100 text-green-500"
-                      }`}
-                    >
-                      {customer.status}
-                    </span>
-                  </td>
-                  <td className="p-3">
-                    <button onClick={() => handleEdit(customer.id)}>
-                      <img
-                        src="../public/create.png"
-                        alt="Edit"
-                        className="w-4 h-4"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <TableDataLoad customerData={customerData} handleEdit={handleEdit} />
           {/*Xử lý modal thêm*/}
           {isModalAddOpen && (
             <ModalAdd setIsModalAddOpen={setIsModalAddOpen} onUserAdded={fetchUsers}/>
