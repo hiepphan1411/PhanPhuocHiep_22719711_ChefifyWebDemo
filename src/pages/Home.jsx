@@ -1,25 +1,15 @@
 import { useEffect, useState } from "react";
 import OverviewLoad from "../components/OverviewLoad";
 import TableDataLoad from "../components/TableDataLoad";
+import ModalAdd from "../components/ModalAdd";
 
 export default function Home() {
-  const [search, setSearch] = useState("");
-  const [overviewData, setOverviewData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
   //Quản lý dữ liệu edit
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   //Quản lý modal thêm
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
-  useEffect(() => {
-    fetch("http://localhost:3001/overview")
-      .then((res) => res.json())
-      .then((data) => {
-        setOverviewData(data);
-      })
-      .catch((error) => console.error("Error fetching overview data:", error));
-  }, []);
-
   useEffect(() => {
     fetch("http://localhost:3002/users")
       .then((res) => res.json())
@@ -80,31 +70,7 @@ export default function Home() {
   };
   return (
     <div className="flex-1 flex flex-col">
-      <header className="flex items-center justify-between p-3 bg-white border-b-gray-200 border-b">
-        <h1 className="text-2xl font-bold text-pink-500">DashBoard</h1>
-        <div className="flex items-center gap-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="rounded-full px-9 py-2 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-500"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <span className="text-gray-500">
-            <img src="../public/Bell 1.png"></img>
-          </span>
-          <span className="text-gray-500">
-            <img src="../public/Question 1.png"></img>
-          </span>
-          <img
-            src="../public/Avatar 313.png"
-            alt="Avatar"
-            className="rounded-full w-10 h-10"
-          />
-        </div>
-      </header>
-      {/* Overview */}
-      <OverviewLoad overviewData={overviewData} />
+      
       {/* Table */}
       <div className="flex bg-white justify-between items-center pb-5">
         <div className="flex justify-start gap-2 items-center pl-5">

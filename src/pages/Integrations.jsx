@@ -1,7 +1,7 @@
-export default function Messages() {
+export default function Integrations() {
     return (
         <div>
-            <h1>Messages</h1>
+            <h1 className="text-2xl">Integrations</h1>
         </div>
     )
 }
