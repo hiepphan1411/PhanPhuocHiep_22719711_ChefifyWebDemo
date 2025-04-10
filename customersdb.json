@@ -1,0 +1,67 @@
+{
+    "users": [
+            {
+              "id": 1,
+              "name": "Phan Phước Hiệp",
+              "company": "Công ty TNHH Phan Phước Hiệp",
+              "orderValue": 359,
+              "orderDate": "10/07/2023",
+              "status": "New",
+              "linkAvatar": "../public/Avatar (1).png"
+            },
+            {
+              "id": 2,
+              "name": "Elizabeth Lee",
+              "company": "AvatarSystems",
+              "orderValue": 359,
+              "orderDate": "10/07/2023",
+              "status": "New",
+              "linkAvatar": "../public/Avatar.png"
+            },
+            {
+              "id": 3,
+              "name": "Carlos Garcia",
+              "company": "SmoozeShift",
+              "orderValue": 747,
+              "orderDate": "24/07/2023",
+              "status": "New",
+              "linkAvatar": "../public/Avatar (1).png"
+            },
+            {
+              "id": 4,
+              "name": "Elizabeth Bailey",
+              "company": "Prime Time Telecom",
+              "orderValue": 564,
+              "orderDate": "08/08/2023",
+              "status": "In-progress",
+              "linkAvatar": "../public/Avatar (2).png"
+            },
+            {
+              "id": 5,
+              "name": "Ryan Brown",
+              "company": "OmniTech Corporation",
+              "orderValue": 541,
+              "orderDate": "31/08/2023",
+              "status": "In-progress",
+              "linkAvatar": "../public/Avatar (3).png"
+            },
+            {
+              "id": 6,
+              "name": "Ryan Young",
+              "company": "DataStream Inc.",
+              "orderValue": 769,
+              "orderDate": "01/05/2023",
+              "status": "Completed",
+              "linkAvatar": "../public/Avatar (4).png"
+            },
+            {
+              "id": 7,
+              "name": "Hailey Adams",
+              "company": "FlowRush",
+              "orderValue": 344922,
+              "orderDate": "10/06/2023",
+              "status": "Completed",
+              "linkAvatar": "../public/Avatar (5).png"
+            }  
+    ]
+}

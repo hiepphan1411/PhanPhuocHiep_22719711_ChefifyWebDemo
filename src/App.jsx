@@ -11,12 +11,21 @@ import Integrations from "./components/Integrations";
 function App() {
   const [search, setSearch] = useState("");
   const [overviewData, setOverviewData] = useState([]);
-
+  const [customerData, setCustomerData] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3001/overview")
       .then((res) => res.json())
-      .then((data) => setOverviewData(data))
+      .then((data) => {
+        setOverviewData(data);
+      })
       .catch((error) => console.error("Error fetching overview data:", error));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:3002/users")
+      .then((res) => res.json())
+      .then((data) => setCustomerData(data))
+      .catch((error) => console.error("Error fetching customer data:", error));
   }, []);
 
   return (
@@ -143,15 +152,15 @@ function App() {
             </div>
           </header>
           {/* Overview */}
-          <main className="pl-5 bg-white">
+          <main className="pl-5 bg-white p-3">
             <div className="flex flex-row gap-4 items-center ">
               <img className="w-7 h-6" src="../public/Squares four 1.png"></img>
               <h1 className="text-2xl font-bold">Overview</h1>
             </div>
 
-            <section className="grid grid-cols-3 gap-6 mb-10 mt-4">
+            <section className="grid grid-cols-3 gap-6 mb-5 mt-4">
               {overviewData.map((item) => {
-                if (item.id === 1) {
+                if (item.id == 1) {
                   return (
                     <div
                       key={item.id}
@@ -180,7 +189,7 @@ function App() {
                       </button>
                     </div>
                   );
-                } else if (item.id === 2) {
+                } else if (item.id == 2) {
                   return (
                     <div
                       key={item.id}
@@ -209,7 +218,7 @@ function App() {
                       </button>
                     </div>
                   );
-                } else if (item.id === 3) {
+                } else if (item.id == 3) {
                   return (
                     <div
                       key={item.id}
@@ -258,40 +267,52 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b">
-                <td className="p-3">
-                  <input type="checkbox" />
-                </td>
-                <td className="p-3 flex items-center gap-2">
-                  <img
-                    src="../public/Avatar (1).png"
-                    alt=""
-                    className="w-8 h-8 rounded-full"
-                  />
-                  Phan Phước Hiệp
-                </td>
-                <td className="p-3">IT</td>
-                <td className="p-3">12000000</td>
-                <td className="p-3">12/11/2004</td>
-                <td className="p-3">
-                  <span className="px-2 py-1 rounded-full text-xs font-semiboldbg-blue-100 text-blue-500 bg-blue-100">
-                    new
-                  </span>
-                </td>
-                <td className="p-3">
-                  <button>
+              {customerData.map((customer) => (
+                <tr key={customer.id} className="border-b border-b-gray-200">
+                  <td className="p-3">
+                    <input type="checkbox"></input>
+                  </td>
+                  <td className="p-3 flex items-center gap-2">
                     <img
-                      src="../public/create.png"
-                      alt="Edit"
-                      className="w-4 h-4"
+                      src={customer.linkAvatar}
+                      alt={customer.name}
+                      className="w-8 h-8 rounded-full"
                     />
-                  </button>
-                </td>
-              </tr>
+                    {customer.name}
+                  </td>
+                  <td className="p-3">{customer.company}</td>
+                  <td className="p-3">
+                    {customer.orderValue.toLocaleString("en-US")}
+                  </td>
+                  <td className="p-3">{customer.orderDate}</td>
+                  <td className="p-3">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        customer.status === "New"
+                          ? "bg-blue-100 text-blue-500"
+                          : customer.status === "In-progress"
+                          ? "bg-yellow-100 text-yellow-500"
+                          : "bg-green-100 text-green-500"
+                      }`}
+                    >
+                      {customer.status}
+                    </span>
+                  </td>
+                  <td className="p-3">
+                    <button>
+                      <img
+                        src="../public/create.png"
+                        alt="Edit"
+                        className="w-4 h-4"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <div className="flex items-center justify-between bg-white pl-5">
-            <div className="text-3sm">1 results</div>
+            <div className="text-3sm">{customerData.length} results</div>
             <div className="flex items-center justify-end space-x-2 mt-4">
               <button className="p-2 rounded-full hover:bg-gray-200">
                 &lt;
