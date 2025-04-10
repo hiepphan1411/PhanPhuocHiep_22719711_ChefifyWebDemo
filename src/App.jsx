@@ -160,7 +160,7 @@ function App() {
                       <div>
                         <p className="font-bold">{item.title}</p>
                         <h2 className="text-3xl font-bold ml-1">
-                          ${item.amount.toLocaleString('en-US')}
+                          ${item.amount.toLocaleString("en-US")}
                         </h2>
                         <span className="flex items-center gap-2 mt-3">
                           <p
@@ -189,7 +189,7 @@ function App() {
                       <div>
                         <p className="font-bold">{item.title}</p>
                         <h2 className="text-3xl font-bold ml-1">
-                          ${item.amount.toLocaleString('en-US')}
+                          ${item.amount.toLocaleString("en-US")}
                         </h2>
                         <span className="flex items-center gap-2 mt-3">
                           <p
@@ -218,7 +218,7 @@ function App() {
                       <div>
                         <p className="font-bold">{item.title}</p>
                         <h2 className="text-3xl font-bold ml-1">
-                          {item.amount.toLocaleString('en-US')}
+                          {item.amount.toLocaleString("en-US")}
                         </h2>
                         <span className="flex items-center gap-2 mt-3">
                           <p
@@ -242,8 +242,67 @@ function App() {
               })}
             </section>
           </main>
-          <div>
-            <h1> Datatable</h1>
+          {/* Table */}
+          <table className="w-full text-left bg-white">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3">
+                  <input type="checkbox"></input>
+                </th>
+                <th className="p-3">CUSTOMER NAME</th>
+                <th className="p-3">COMPANY</th>
+                <th className="p-3">ORDER VALUE</th>
+                <th className="p-3">ORDER DATE</th>
+                <th className="p-3">STATUS</th>
+                <th className="p-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b">
+                <td className="p-3">
+                  <input type="checkbox" />
+                </td>
+                <td className="p-3 flex items-center gap-2">
+                  <img
+                    src="../public/Avatar (1).png"
+                    alt=""
+                    className="w-8 h-8 rounded-full"
+                  />
+                  Phan Phước Hiệp
+                </td>
+                <td className="p-3">IT</td>
+                <td className="p-3">12000000</td>
+                <td className="p-3">12/11/2004</td>
+                <td className="p-3">
+                  <span className="px-2 py-1 rounded-full text-xs font-semiboldbg-blue-100 text-blue-500 bg-blue-100">
+                    new
+                  </span>
+                </td>
+                <td className="p-3">
+                  <button>
+                    <img
+                      src="../public/create.png"
+                      alt="Edit"
+                      className="w-4 h-4"
+                    />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="flex items-center justify-between bg-white pl-5">
+            <div className="text-3sm">1 results</div>
+            <div className="flex items-center justify-end space-x-2 mt-4">
+              <button className="p-2 rounded-full hover:bg-gray-200">
+                &lt;
+              </button>
+              <button className="w-8 h-8 rounded-full bg-pink-500 text-white font-bold">
+                1
+              </button>
+              <button className="p-2 rounded-full hover:bg-gray-200">
+                &gt;
+              </button>
+            </div>
           </div>
         </div>
       </div>
