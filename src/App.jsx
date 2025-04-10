@@ -1,20 +1,23 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, NavLink, Router } from "react-router-dom";
-import Home from "./components/Home";
-import Folder from "./components/Folder";
-import Teams from "./components/Teams";
-import Analytics from "./components/Analytics";
-import Messages from "./components/Messages";
-import Integrations from "./components/Integrations";
+import Home from "./pages/Home";
+import Folder from "./pages/Folder";
+import Teams from "./pages/Teams";
+import Analytics from "./pages/Analytics";
+import Messages from "./pages/Messages";
+import Integrations from "./pages/Integrations";
+import ModalAdd from "./components/ModalAdd";
 
 function App() {
   const [search, setSearch] = useState("");
   const [overviewData, setOverviewData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
-  //Quản lý dữ liệu edit khách hàng
+  //Quản lý dữ liệu edit
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  //Quản lý modal thêm 
+  const [isModalAddOpen, setIsModalAddOpen] = useState(false);
   useEffect(() => {
     fetch("http://localhost:3001/overview")
       .then((res) => res.json())
@@ -70,7 +73,18 @@ function App() {
       console.error("Error fetching customer data:", error);
     }
   };
-
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:3002/users");
+      const data = await response.json();
+      setCustomerData(data);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  }
+  const handleAddUser = () => {
+    setIsModalAddOpen(true);
+  };
   return (
     <BrowserRouter>
       <div className="flex bg-gray-100">
@@ -304,7 +318,7 @@ function App() {
               <h1 className="text-2xl font-bold">Detailed report</h1>
             </div>
             <div className="flex justify-end gap-2">
-              <button className="border px-4 py-2 rounded-lg text-pink-500 border-pink-500 flex gap-2">
+              <button onClick={handleAddUser} className="border px-4 py-2 rounded-lg text-pink-500 border-pink-500 flex gap-2">
                 <img src="../public/Download.png"></img>
                 <h3>Import</h3>
               </button>
@@ -373,6 +387,10 @@ function App() {
               ))}
             </tbody>
           </table>
+          {/*Xử lý modal thêm*/}
+          {isModalAddOpen && (
+            <ModalAdd setIsModalAddOpen={setIsModalAddOpen} onUserAdded={fetchUsers}/>
+          )}
           {/* Xử lý modal edit */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center">
