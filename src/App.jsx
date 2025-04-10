@@ -43,6 +43,34 @@ function App() {
       console.error("Error fetching customer data:", error);
     }
   };
+  //Xử lý lưu dữ liệu
+  const handleSave = async () => {
+    try {
+      await fetch(`http://localhost:3002/users/${selectedCustomer.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(selectedCustomer),
+      });
+      alert("Cập nhật thành công!");
+      setIsModalOpen(false);
+      //Làm mới datatable
+      fetchCustomerData();
+    } catch (error) {
+      console.error("Error saving customer data:", error);
+    }
+  };
+  const fetchCustomerData = async () => {
+    try {
+      const response = await fetch("http://localhost:3002/users");
+      const data = await response.json();
+      setCustomerData(data);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  };
+
   return (
     <BrowserRouter>
       <div className="flex bg-gray-100">
@@ -360,6 +388,12 @@ function App() {
                       <input
                         type="text"
                         value={selectedCustomer.name}
+                        onChange={(e) =>
+                          setSelectedCustomer({
+                            ...selectedCustomer,
+                            name: e.target.value,
+                          })
+                        }
                         className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
@@ -368,6 +402,12 @@ function App() {
                       <input
                         type="text"
                         value={selectedCustomer.company}
+                        onChange={(e) =>
+                          setSelectedCustomer({
+                            ...selectedCustomer,
+                            company: e.target.value,
+                          })
+                        }
                         className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
@@ -376,6 +416,12 @@ function App() {
                       <input
                         type="text"
                         value={selectedCustomer.orderValue}
+                        onChange={(e) =>
+                          setSelectedCustomer({
+                            ...selectedCustomer,
+                            orderValue: e.target.value,
+                          })
+                        }
                         className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
@@ -384,6 +430,12 @@ function App() {
                       <input
                         type="text"
                         value={selectedCustomer.orderDate}
+                        onChange={(e) =>
+                          setSelectedCustomer({
+                            ...selectedCustomer,
+                            orderDate: e.target.value,
+                          })
+                        }
                         className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                       />
                     </div>
@@ -410,7 +462,7 @@ function App() {
                 )}
                 <div className="flex justify-end mt-4 gap-2">
                   <button
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={handleSave}
                     className="px-4 py-2 bg-pink-500 text-white rounded"
                   >
                     Lưu thay đổi
