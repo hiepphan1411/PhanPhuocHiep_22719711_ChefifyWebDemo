@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, NavLink, Router } from "react-router-dom";
 import Home from "./components/Home";
@@ -10,6 +10,14 @@ import Integrations from "./components/Integrations";
 
 function App() {
   const [search, setSearch] = useState("");
+  const [overviewData, setOverviewData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/overview")
+      .then((res) => res.json())
+      .then((data) => setOverviewData(data))
+      .catch((error) => console.error("Error fetching overview data:", error));
+  }, []);
 
   return (
     <BrowserRouter>
@@ -136,53 +144,102 @@ function App() {
           </header>
           {/* Overview */}
           <main className="pl-5 bg-white">
-            <div className="flex flex-row gap-4 justifu-center items-center ">
+            <div className="flex flex-row gap-4 items-center ">
               <img className="w-7 h-6" src="../public/Squares four 1.png"></img>
               <h1 className="text-2xl font-bold">Overview</h1>
             </div>
 
             <section className="grid grid-cols-3 gap-6 mb-10 mt-4">
-              <div className="bg-pink-100 p-3 rounded-xl flex relative">
-                <div>
-                  <p className="font-bold">Turnover</p>
-                  <h2 className="text-3xl font-bold ml-1">$92,405</h2>
-                  <span className="flex items-center gap-2 mt-3">
-                    <p className="text-green-500 text-sm">▲ 5.39%</p>
-                    <span> period of change</span>
-                  </span>
-                </div>
-                <button className="absolute top-8 right-4">
-                  <img src="../public/Button 1509.png" alt="Button"></img>
-                </button>
-              </div>
-
-              <div className="bg-blue-100 p-3 rounded-xl flex relative">
-                <div>
-                  <p className="font-bold">Profit</p>
-                  <h2 className="text-3xl font-bold ml-1">$32,218</h2>
-                  <span className="flex items-center gap-2 mt-3">
-                    <p className="text-green-500 text-sm">▲ 5.39%</p>
-                    <span> period of change</span>
-                  </span>
-                </div>
-                <button className="absolute top-8 right-4">
-                  <img src="../public/Button 1529.png" alt="Button"></img>
-                </button>
-              </div>
-
-              <div className="bg-indigo-100 p-3 rounded-xl flex relative">
-                <div>
-                  <p className="font-bold">New customer</p>
-                  <h2 className="text-3xl font-bold ml-1">298</h2>
-                  <span className="flex items-center gap-2 mt-3">
-                    <p className="text-green-500 text-sm">▲ 5.39%</p>
-                    <span> period of change</span>
-                  </span>
-                </div>
-                <button className="absolute top-8 right-4">
-                  <img src="../public/Button 1530.png" alt="Button"></img>
-                </button>
-              </div>
+              {overviewData.map((item) => {
+                if (item.id === 1) {
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-pink-100 p-3 rounded-xl flex relative"
+                    >
+                      <div>
+                        <p className="font-bold">{item.title}</p>
+                        <h2 className="text-3xl font-bold ml-1">
+                          ${item.amount.toLocaleString('en-US')}
+                        </h2>
+                        <span className="flex items-center gap-2 mt-3">
+                          <p
+                            className={`text-sm ${
+                              item.change >= 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }`}
+                          >
+                            {item.change >= 0 ? "▲" : "▼"} {item.change}%
+                          </p>
+                          <span> period of change</span>
+                        </span>
+                      </div>
+                      <button className="absolute top-8 right-4">
+                        <img src="../public/Button 1509.png" alt="Button" />
+                      </button>
+                    </div>
+                  );
+                } else if (item.id === 2) {
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-blue-100 p-3 rounded-xl flex relative"
+                    >
+                      <div>
+                        <p className="font-bold">{item.title}</p>
+                        <h2 className="text-3xl font-bold ml-1">
+                          ${item.amount.toLocaleString('en-US')}
+                        </h2>
+                        <span className="flex items-center gap-2 mt-3">
+                          <p
+                            className={`text-sm ${
+                              item.change >= 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }`}
+                          >
+                            {item.change >= 0 ? "▲" : "▼"} {item.change}%
+                          </p>
+                          <span> period of change</span>
+                        </span>
+                      </div>
+                      <button className="absolute top-8 right-4">
+                        <img src="../public/Button 1529.png" alt="Button" />
+                      </button>
+                    </div>
+                  );
+                } else if (item.id === 3) {
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-indigo-100 p-3 rounded-xl flex relative"
+                    >
+                      <div>
+                        <p className="font-bold">{item.title}</p>
+                        <h2 className="text-3xl font-bold ml-1">
+                          {item.amount.toLocaleString('en-US')}
+                        </h2>
+                        <span className="flex items-center gap-2 mt-3">
+                          <p
+                            className={`text-sm ${
+                              item.change >= 0
+                                ? "text-green-500"
+                                : "text-red-500"
+                            }`}
+                          >
+                            {item.change >= 0 ? "▲" : "▼"} {item.change}%
+                          </p>
+                          <span> period of change</span>
+                        </span>
+                      </div>
+                      <button className="absolute top-8 right-4">
+                        <img src="../public/Button 1530.png" alt="Button" />
+                      </button>
+                    </div>
+                  );
+                }
+              })}
             </section>
           </main>
           <div>
