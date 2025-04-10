@@ -12,6 +12,9 @@ function App() {
   const [search, setSearch] = useState("");
   const [overviewData, setOverviewData] = useState([]);
   const [customerData, setCustomerData] = useState([]);
+  //Quản lý dữ liệu edit khách hàng
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   useEffect(() => {
     fetch("http://localhost:3001/overview")
       .then((res) => res.json())
@@ -28,6 +31,18 @@ function App() {
       .catch((error) => console.error("Error fetching customer data:", error));
   }, []);
 
+  //Xử lý modal edit
+  const handleEdit = async (id) => {
+    try {
+      const response = await fetch("http://localhost:3002/users/" + id);
+      const data = await response.json();
+
+      setSelectedCustomer(data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  };
   return (
     <BrowserRouter>
       <div className="flex bg-gray-100">
@@ -48,7 +63,10 @@ function App() {
                   }`
                 }
               >
-                <img src="../public/Squares four 1.png"></img>
+                <img
+                  className="bg-white rounded"
+                  src="../public/Squares four 1.png"
+                ></img>
                 Dashboard
               </NavLink>
               <NavLink
@@ -252,6 +270,22 @@ function App() {
             </section>
           </main>
           {/* Table */}
+          <div className="flex bg-white justify-between items-center pb-5">
+            <div className="flex justify-start gap-2 items-center pl-5">
+              <img src="../public/File text 1.png"></img>
+              <h1 className="text-2xl font-bold">Detailed report</h1>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button className="border px-4 py-2 rounded-lg text-pink-500 border-pink-500 flex gap-2">
+                <img src="../public/Download.png"></img>
+                <h3>Import</h3>
+              </button>
+              <button className="border px-4 py-2 rounded-lg text-pink-500 border-pink-500 flex gap-2">
+                <img src="../public/Move up.png"></img>
+                <h3>Export</h3>
+              </button>
+            </div>
+          </div>
           <table className="w-full text-left bg-white">
             <thead className="bg-gray-100">
               <tr>
@@ -299,7 +333,7 @@ function App() {
                     </span>
                   </td>
                   <td className="p-3">
-                    <button>
+                    <button onClick={() => handleEdit(customer.id)}>
                       <img
                         src="../public/create.png"
                         alt="Edit"
@@ -311,6 +345,86 @@ function App() {
               ))}
             </tbody>
           </table>
+          {/* Xử lý modal edit */}
+          {isModalOpen && (
+            <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center">
+              <div className="bg-gray-100 p-6 rounded-lg w-1/3">
+                <div className="flex gap-2">
+                  <img className="w-7 h-7" src="../public/create.png"></img>
+                  <h2 className="text-xl font-bold mb-4">Edit Customer</h2>
+                </div>
+                {selectedCustomer ? (
+                  <div className="space-y-4">
+                    <div>
+                      <label>Name:</label>
+                      <input
+                        type="text"
+                        value={selectedCustomer.name}
+                        className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
+                    <div>
+                      <label>Company:</label>
+                      <input
+                        type="text"
+                        value={selectedCustomer.company}
+                        className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
+                    <div>
+                      <label>Order Value:</label>
+                      <input
+                        type="text"
+                        value={selectedCustomer.orderValue}
+                        className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
+                    <div>
+                      <label>OrderDate:</label>
+                      <input
+                        type="text"
+                        value={selectedCustomer.orderDate}
+                        className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
+                    <div>
+                      <label>Status:</label>
+                      <select
+                        value={selectedCustomer.status}
+                        onChange={(e) =>
+                          setSelectedCustomer({
+                            ...selectedCustomer,
+                            status: e.target.value,
+                          })
+                        }
+                        className="p-2 w-full bg-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      >
+                        <option value="New">New</option>
+                        <option value="In-progress">In-progress</option>
+                        <option value="Completed">Completed</option>
+                      </select>
+                    </div>
+                  </div>
+                ) : (
+                  <p>Loading...</p>
+                )}
+                <div className="flex justify-end mt-4 gap-2">
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2 bg-pink-500 text-white rounded"
+                  >
+                    Lưu thay đổi
+                  </button>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-4 py-2 bg-white text-pink-500 border-pink-500 border rounded"
+                  >
+                    Đóng
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="flex items-center justify-between bg-white pl-5">
             <div className="text-3sm">{customerData.length} results</div>
             <div className="flex items-center justify-end space-x-2 mt-4">

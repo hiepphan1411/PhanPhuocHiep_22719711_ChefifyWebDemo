@@ -1,7 +1,7 @@
 {
     "users": [
             {
-              "id": 1,
+              "id": "1",
               "name": "Phan Phước Hiệp",
               "company": "Công ty TNHH Phan Phước Hiệp",
               "orderValue": 359,
@@ -10,7 +10,7 @@
               "linkAvatar": "../public/Avatar (1).png"
             },
             {
-              "id": 2,
+              "id": "2",
               "name": "Elizabeth Lee",
               "company": "AvatarSystems",
               "orderValue": 359,
@@ -19,7 +19,7 @@
               "linkAvatar": "../public/Avatar.png"
             },
             {
-              "id": 3,
+              "id": "3",
               "name": "Carlos Garcia",
               "company": "SmoozeShift",
               "orderValue": 747,
@@ -28,7 +28,7 @@
               "linkAvatar": "../public/Avatar (1).png"
             },
             {
-              "id": 4,
+              "id": "4",
               "name": "Elizabeth Bailey",
               "company": "Prime Time Telecom",
               "orderValue": 564,
@@ -37,7 +37,7 @@
               "linkAvatar": "../public/Avatar (2).png"
             },
             {
-              "id": 5,
+              "id": "5",
               "name": "Ryan Brown",
               "company": "OmniTech Corporation",
               "orderValue": 541,
@@ -46,7 +46,7 @@
               "linkAvatar": "../public/Avatar (3).png"
             },
             {
-              "id": 6,
+              "id": "6",
               "name": "Ryan Young",
               "company": "DataStream Inc.",
               "orderValue": 769,
@@ -55,7 +55,7 @@
               "linkAvatar": "../public/Avatar (4).png"
             },
             {
-              "id": 7,
+              "id": "7",
               "name": "Hailey Adams",
               "company": "FlowRush",
               "orderValue": 344922,
